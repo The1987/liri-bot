@@ -111,14 +111,35 @@ else if (a === "movie-this") {
         })
     }
 
-    // Test Input: node liri movie-this
+        // Test Input: node liri movie-this
 
     else {
         console.log("If you haven't watched Mr. Nobody... then you should watch it on Netflix");
     }
 }
 
+// Test Input: node liri do-what-it-says
 
 else if (a === "do-what-it-says") {
-    console.log('do-what-it-says');
-}
+    // fs.readFile('random.txt', 'utf-8', function (err, data) {
+    //     if (err) throw err;
+    //     console.log('This is the data in the .txt file: ', data);
+
+        spotify.search({ type: "track", query: "I Want it That Way", limit: 5 })
+            .then(function (response) {
+
+                //Artist(s)
+                console.log('Artist Name: ', JSON.stringify(response.tracks.items[0].artists[0].name, null, 2));
+
+                // //Song Name
+                console.log('Song Name: ', JSON.stringify(response.tracks.items[0].name, null, 2));
+
+                // //Song Preview Link
+                console.log('Preview Song Link: ', JSON.stringify(response.tracks.items[0].external_urls.spotify, null, 2));
+
+                // //Album, Song Is From
+                console.log('Album: ', JSON.stringify(response.tracks.items[0].album.name, null, 2));
+
+            });
+        //})
+    }
