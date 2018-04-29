@@ -19,6 +19,7 @@ require("dotenv").config();
 var keys = require("./key.js");
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
+var request = require("request");
 
 var client = new Twitter(keys.twitter);
 var spotify = new Spotify(keys.spotify);
@@ -29,7 +30,6 @@ var spotify = new Spotify(keys.spotify);
 var input = process.argv;
 var a = input[2];
 var b = input[3];
-var c = input[4];
 
 // This will show your last 20 tweets and when they were created at in your terminal/bash window.
 if (a === "my-tweets") {
@@ -45,7 +45,7 @@ if (a === "my-tweets") {
 }
 
 else if (a === "spotify-this-song") {
-    spotify.search({ type: "track" , query: "all the small things", limit: 5 })
+    spotify.search({ type: "track", query: b, limit: 5 })
         .then(function (response) {
             //console.log(JSON.stringify(response, null, 2));
 
@@ -67,7 +67,7 @@ else if (a === "spotify-this-song") {
             spotify.search({ type: "track", query: "The Sign" })
             console.log(JSON.stringify(err, null, 2));
             console.log(err);
-         })
+        })
 
         .catch(function (fail) {
             spotify.search({ type: "track", query: "The Sign" })
@@ -76,10 +76,44 @@ else if (a === "spotify-this-song") {
 }
 
 else if (a === "movie-this") {
-    console.log('movie-this');
-}
+    console.log(b);
+    request("https://www.omdbapi.com/?t=" + b + "&y=&plot=short&apikey=trilogy", function (error, response, body) {
+
+        // If the request was successful...
+        if (!error && response.statusCode === 200) {
+
+            // Title of the movie.
+            console.log(JSON.parse(body).Title);
+
+            // Year the movie came out.
+            console.log(JSON.parse(body).Title);
+
+            // IMDB Rating of the movie.
+            console.log(JSON.parse(body).Title);
+
+            // Rotten Tomatoes Rating of the movie.
+            console.log(JSON.parse(body).Title);
+
+            // Country where the movie was produced.
+            console.log(JSON.parse(body).Title);
+
+            // Language of the movie.
+            console.log(JSON.parse(body).Title);
+
+            // Plot of the movie.
+            console.log(JSON.parse(body).Title);
+
+            // Actors in the movie.
+            console.log(JSON.parse(body).Title);
+
+        }
+        else {
+            console.log("If you haven't watch Mr. Nobody then you should watch it on Netflix <a href='http://www.imdb.com/title/tt0485947/' target='_blank'");
+        }
+        // node liri movie-this babe
+    });
+
 
 // else if (a === "do-what-it-says") {
 //     console.log('do-what-it-says');
 // }
-
